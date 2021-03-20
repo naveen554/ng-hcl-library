@@ -1,0 +1,59 @@
+<div class="login-wrapper">
+  <mat-card>
+    <mat-card-title>{{login ? 'Login' : 'Forgot Password'}}</mat-card-title>
+    <mat-card-content>
+      <div *ngIf="login">
+        <form [formGroup]="loginForm">
+          <p>
+            <mat-form-field>
+              <input type="email" matInput placeholder="Email" formControlName="username">
+              <mat-hint style="color: red;"
+                *ngIf="!loginForm.get('username').valid && loginForm.get('username').touched">
+                Invalid Email</mat-hint>
+            </mat-form-field>
+          </p>
+
+          <p>
+            <mat-form-field>
+              <input type="password" matInput placeholder="Password" formControlName="password">
+              <mat-hint style="color: red;"
+                *ngIf="!loginForm.get('password').valid && loginForm.get('password').touched">
+                Password is required</mat-hint>
+
+            </mat-form-field>
+          </p>
+
+          <p *ngIf="error" class="error">
+            {{ error }}
+          </p>
+
+          <div class="login-button">
+            <button (click)="submit()" class="btn btn-sm outer-btn btn-primary" color="primary"
+              [ngClass]="{'disabled' : !loginForm.valid}" [disabled]="!loginForm.valid">Login</button>
+            <button (click)="forgotPwd()" class="btn btn-sm outer-btn" color="primary">Forgot Password</button>
+          </div>
+        </form>
+      </div>
+      <form [formGroup]="forgotPwdForm" *ngIf="!login">
+        <p>
+          <mat-form-field>
+            <input type="email" matInput placeholder="UserEmail" formControlName="email" placeholder="Enter Your Email">
+            <mat-hint style="color: red;"
+              *ngIf="!forgotPwdForm.get('email').valid && forgotPwdForm.get('email').touched">
+              Invalid UserEmail</mat-hint>
+          </mat-form-field>
+        </p>
+
+        <p *ngIf="displayError" class="error">
+          {{ error }}
+        </p>
+
+        <div class="forgot-buttons">
+          <button (click)="changePwd()" [ngClass]="{'disabled' : !forgotPwdForm.valid}"
+            [disabled]="!forgotPwdForm.valid" class="btn btn-sm outer-btn btn-primary" color="primary">Submit</button>
+          <button (click)="cancel()" class="btn btn-sm outer-btn" color="primary">Cancel</button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
